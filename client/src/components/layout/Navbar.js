@@ -58,7 +58,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: "Contact Keeper",
+  title: "Flipr",
   icon: "fas fa-id-card-alt",
 };
 
