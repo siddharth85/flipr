@@ -36,15 +36,23 @@ const Login = (props) => {
     }
   };
 
+  const LoginForm = {
+    maxWidth: "500px",
+    padding: "15px",
+    margin: "auto",
+    marginTop: "50px",
+  };
+
   return (
-    <div className="form-container">
-      <h1>
+    <div style={LoginForm}>
+      <h1 style={{ textAlign: "center" }}>
         Account <span className="text-primary">Login</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
+            class="form-control"
             id="email"
             type="email"
             name="email"
@@ -56,6 +64,7 @@ const Login = (props) => {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
+            class="form-control"
             id="password"
             type="password"
             name="password"
@@ -64,11 +73,9 @@ const Login = (props) => {
             required
           />
         </div>
-        <input
-          type="submit"
-          value="Login"
-          className="btn btn-primary btn-block"
-        />
+        <button type="submit" className="btn btn-primary mt-3" value="Register">
+          Login
+        </button>
       </form>
     </div>
   );
