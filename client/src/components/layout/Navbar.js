@@ -19,12 +19,12 @@ const Navbar = ({ title, icon }) => {
 
   const authLinks = (
     <Fragment>
-      <li>Hello {user && user.name}</li>
+      <li className="nav-link">Hello {user && user.name}</li>
       <li>
-        <a onClick={onLogout} href="#!">
-          <i className="fas fa-sign-out-alt" />{" "}
-          <span className="hide-sm">Logout</span>
-        </a>
+        <Link onClick={onLogout} href="#!" className="nav-link">
+          <i classNameName="fas fa-sign-out-alt" />{" "}
+          <span classNameName="hide-sm">Logout</span>
+        </Link>
       </li>
     </Fragment>
   );
@@ -32,23 +32,49 @@ const Navbar = ({ title, icon }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
       </li>
     </Fragment>
   );
 
   return (
-    <div className="navbar bg-primary">
-      <h1>
-        <Link to="/">
-          <i className={icon} /> {title}
-        </Link>
-      </h1>
-      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
-    </div>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+          <Link style={{ marginLeft: "50px" }} className="navbar-brand" to="/">
+            <i className={icon} /> {title}
+          </Link>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className="collapse navbar-collapse justify-content-end"
+            style={{ marginRight: "50px" }}
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav ">
+              {isAuthenticated ? authLinks : guestLinks}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
@@ -58,7 +84,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: "Flipr",
+  title: "Contact Keeper",
   icon: "fas fa-id-card-alt",
 };
 
