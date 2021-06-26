@@ -4,10 +4,9 @@ import Navbar from "./components/layout/Navbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import Dashboard from "./components/user/Dashboard";
 
 import AuthState from "./context/auth/AuthState";
-
-// import "./App.css";
 
 const App = () => {
   return (
@@ -19,6 +18,7 @@ const App = () => {
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
         </Fragment>
