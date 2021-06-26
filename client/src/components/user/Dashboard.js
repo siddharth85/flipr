@@ -16,8 +16,16 @@ function Dashboard() {
           Import Contacts
         </Link>
         <Link
+          className="btn btn-primary btn-md"
+          style={{ marginLeft: "10px" }}
+          to="/dashboard"
+          role="button"
+        >
+          View Contacts
+        </Link>
+        <Link
           className="btn btn-success btn-md"
-          style={{ marginRight: "5px" }}
+          style={{ marginLeft: "10px" }}
           to="/dashboard"
           role="button"
         >
