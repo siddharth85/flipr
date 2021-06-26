@@ -21,9 +21,9 @@ const Navbar = ({ title, icon }) => {
     <Fragment>
       <li className="nav-link">Hello {user && user.name}</li>
       <li>
-        <Link onClick={onLogout} href="#!" className="nav-link">
-          <i classNameName="fas fa-sign-out-alt" />{" "}
-          <span classNameName="hide-sm">Logout</span>
+        <Link onClick={onLogout} to="#!" className="nav-link">
+          <i className="fas fa-sign-out-alt" />{" "}
+          <span className="hide-sm">Logout</span>
         </Link>
       </li>
     </Fragment>
@@ -84,7 +84,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: "Contact Keeper",
+  title: "Mail Scheduler",
   icon: "fas fa-id-card-alt",
 };
 
