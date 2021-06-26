@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const path = require("path");
 const cors = require("cors");
-
+const User = require('./models/User');
 const app = express();
 app.use(cors());
 
@@ -25,6 +25,18 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
   );
 }
+User.findById("60d708c653af56230c62adc6", function (err, details) {
+   if (err) console.log(err);
+   else {
+     details.get("category.github").push( "shankanil007@gmail.com");
+      
+       details.get("category.github").push("gautamsiddharth8576@gmail.com");
+       details.set("category.facebook", "shankanil007@gmail.com");
+      
+       details.get("category.facebook").push("gautamsiddharth8576@gmail.com");
+       details.save();
+     }
+   });
 
 const PORT = process.env.PORT || 5000;
 

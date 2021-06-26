@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -17,7 +17,12 @@ const UserSchema = mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  category: {
+    type: Map,
+    of: { type: Array },
+  },
+
 });
 
 module.exports = mongoose.model('user', UserSchema);
