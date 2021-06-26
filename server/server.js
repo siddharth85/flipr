@@ -15,6 +15,7 @@ app.use(express.json({ extended: false }));
 // Define Routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/send_mail", require("./routes/agenda"));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // ----------------------------------------------------------------------------------------------------------
-// User.findById("60d708c653af56230c62adc6", function (err, details) {
+// User.findById("60d73eda68a94132c84971e2", function (err, details) {
 //   if (err) console.log(err);
 //   else {
 //     details.get("category.github").push("shankanil007@gmail.com");
@@ -39,51 +40,62 @@ if (process.env.NODE_ENV === "production") {
 //     details.save();
 //   }
 // });
+// User.create({
+//   name: "Shankhanil",
+//   email: "abc@gmail.com",
+//   password: "password",
+//   category: {},
+// });
 // ----------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------- AGENDA --------------------------------------------------------------
 
-const Agenda = require("agenda");
-const x = require("./models/Agenda");
+// const Agenda = require("agenda");
+// const x = require("./models/Job");
 
-const agenda = new Agenda({
-  db: {
-    address:
-      "mongodb+srv://shankhanil007:1234@cluster0.azmz3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    collection: "agendas",
-  },
-  processEvery: "20 seconds",
-});
+// const agenda = new Agenda({
+//   db: {
+//     address:
+//       "mongodb+srv://shankhanil007:1234@cluster0.azmz3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+//     collection: "jobs",
+//   },
+//   processEvery: "20 seconds",
+// });
 
-agenda.define("JOB_ONE", (job, done) => {
-  console.log("job one fired here");
-  done();
-});
+// agenda.define("JOB_ONE", (job, done) => {
+//   console.log("job one fired here");
+//   done();
+// });
 
-agenda.define("JOB_TWO", (job, done) => {
-  console.log("JOB TWO fired here");
-  done();
-});
+// agenda.define("JOB_TWO", (job, done) => {
+//   console.log("JOB TWO fired here");
+//   done();
+// });
 
-agenda.define("JOB_THREE", (job, done) => {
-  console.log(job.attrs._id);
-  console.log("JOB three fired here");
-  done();
-});
+// agenda.define("JOB_THREE", (job, done) => {
+//   const { a, b, c, d } = job.attrs.data;
+//   console.log(a + " " + b + " " + c + " " + d);
+//   done();
+// });
 
-agenda.define("JOB_FOUR", (job, done) => {
-  console.log("JOB FOUR fired");
-  done();
-});
+// agenda.define("JOB_FOUR", (job, done) => {
+//   console.log("JOB FOUR fired");
+//   done();
+// });
 
-(async function () {
-  await agenda.start();
+// (async function () {
+//   await agenda.start();
 
-  // await agenda.schedule("2 seconds", "JOB_ONE");
-  // await agenda.schedule("4 seconds", "JOB_TWO");
-  await agenda.every("6 seconds", "JOB_THREE");
-  // await agenda.schedule("in 1 minute", "JOB_FOUR");
-})();
+//   // await agenda.schedule("2 seconds", "JOB_ONE");
+//   // await agenda.schedule("4 seconds", "JOB_TWO");
+//   await agenda.every("6 seconds", "JOB_THREE", {
+//     a: "apple",
+//     b: "ball",
+//     c: "cat",
+//     d: "dog",
+//   });
+//   // await agenda.schedule("in 1 minute", "JOB_FOUR");
+// })();
 
 // x.find({}, function (err, details) {
 //   if (err) {
