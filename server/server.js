@@ -18,6 +18,8 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/send_mail", require("./routes/agenda"));
+app.use("/read_file", require("./routes/readFile"));
+app.use("/user/contact", require("./routes/addContact"));
 
 app.post("/upload", (req, res) => {
   if (req.files == null) {

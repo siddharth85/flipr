@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 function ImportContacts() {
@@ -11,11 +10,7 @@ function ImportContacts() {
     setCategory({ ...category, [e.target.name]: e.target.value });
   };
 
-  const [contact, setContact] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
+  const [contact, setContact] = useState([]);
 
   const [file, setFile] = useState();
   const [filename, setFilename] = useState("Choose File");
@@ -41,18 +36,33 @@ function ImportContacts() {
       setUploadedFile({ fileName, filePath });
     } catch (err) {}
   };
+  // ../../../public/upload/
 
   const ReadFile = async (e) => {
-    const wb = xlsx.readFile("../client/public/uploads/test.xlsx", {
-      cellDates: true,
-    });
-    const ws = wb.Sheets["Sheet1"];
+    const res = await axios.get("http://localhost:5000/read_file");
+    const arr = res.data;
 
-    const data = xlsx.utils.sheet_to_json(ws);
-
-    const email = data.map(function (record) {
-      return record;
+    arr.forEach((data) => {
+      contact.push(data);
     });
+    console.log(category);
+    const obj = { category: category.category, contacts: contact };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/user/contact",
+        obj,
+        config
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const Form = {
@@ -67,7 +77,7 @@ function ImportContacts() {
       <label htmlFor="name">Category</label>
       <input
         id="name"
-        class="form-control"
+        className="form-control"
         type="text"
         name="category"
         placeholder="Teacher , Student, All"
