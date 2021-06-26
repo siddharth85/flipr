@@ -33,7 +33,7 @@ function ImportContacts() {
             required
           />
           <Link className="btn btn-primary btn-sm mt-3" to="#" role="button">
-            Upload CSV
+            Choose File
           </Link>
           <button
             type="submit"

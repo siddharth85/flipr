@@ -4,7 +4,9 @@ const path = require("path");
 const cors = require("cors");
 const User = require("./models/User");
 const app = express();
+const fileUpload = require("express-fileupload");
 app.use(cors());
+app.use(fileUpload());
 
 // Connect Database
 connectDB();
@@ -16,6 +18,21 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/send_mail", require("./routes/agenda"));
+
+app.post("/upload", (req, res) => {
+  if (req.files == null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+  const file = req.files.file;
+
+  file.mv(`${__dirname}/../client/public/uploads/${file.name}`, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    res.json({ fileName: file.name, filepath: `/uploads/${file.name}` });
+  });
+});
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

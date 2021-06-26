@@ -7,6 +7,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import Dashboard from "./components/user/Dashboard";
 import ImportContacts from "./components/user/ImportContacts";
 import ViewContacts from "./components/user/ViewContacts";
+import FileUpload from "./components/fileUpload";
 
 import AuthState from "./context/auth/AuthState";
 
@@ -23,6 +24,7 @@ const App = () => {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/import" component={ImportContacts} />
               <PrivateRoute exact path="/view" component={ViewContacts} />
+              <Route exact path="/fileupload" component={FileUpload} />
             </Switch>
           </div>
         </Fragment>
