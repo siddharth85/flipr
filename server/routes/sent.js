@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     function doA() {
       return new Promise((resolve) => {
         var arr = {};
-        User.findById("60d872c9493abe3098fb8f25", function (err, details) {
+        User.findById("60d88fbfdce43922acbb72ef", function (err, details) {
           if (err) console.log(err);
           else {
             const job_id = details.job_id;

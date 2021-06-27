@@ -24,9 +24,9 @@ agenda.define("SEND_MAIL", (job, done) => {
     }
 
     var mailList = [];
-    details.get(`category.${sent_to}`).forEach((info) => {
-      mailList.push(info.Email);
-    });
+    // details.get(`category.${sent_to}`).forEach((info) => {
+    //   mailList.push(info.Email);
+    // });
 
     var smtpTransport = nodemailer.createTransport({
       service: "Gmail",

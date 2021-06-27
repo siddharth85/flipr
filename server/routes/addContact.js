@@ -5,7 +5,7 @@ const User = require("../models/User");
 
 router.post("/", async (req, res) => {
   try {
-    User.findById("60d872c9493abe3098fb8f25", function (err, details) {
+    User.findById("60d88fbfdce43922acbb72ef", function (err, details) {
       if (err) console.log(err);
       else {
         const type = req.body.category;
