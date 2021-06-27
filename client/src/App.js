@@ -7,7 +7,6 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import Dashboard from "./components/user/Dashboard";
 import ImportContacts from "./components/user/ImportContacts";
 import ViewContacts from "./components/user/ViewContacts";
-import FileUpload from "./components/fileUpload";
 import CreateAgenda from "./components/user/CreateAgenda";
 
 import "./App.css";
@@ -27,7 +26,6 @@ const App = () => {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/import" component={ImportContacts} />
               <PrivateRoute exact path="/view" component={ViewContacts} />
-              <PrivateRoute exact path="/fileupload" component={FileUpload} />
               <PrivateRoute exact path="/newAgenda" component={CreateAgenda} />
             </Switch>
           </div>

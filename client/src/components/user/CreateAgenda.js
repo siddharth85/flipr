@@ -9,6 +9,17 @@ function CreateAgenda() {
   const { user } = authContext;
 
   const [date, setDate] = useState(new Date());
+  const [recurring, setRecurring] = useState(false);
+  const [weekly, setWeekly] = useState(false);
+  const [monthly, setMonthly] = useState(false);
+  const [yearly, setYearly] = useState(false);
+  const [day, setDay] = useState({
+    day: "1",
+  });
+
+  const onChangeSetDay = (e) => {
+    setDay({ ...day, [e.target.name]: e.target.value });
+  };
 
   const [email, setEmail] = useState({
     user_id: "",
@@ -18,18 +29,43 @@ function CreateAgenda() {
     body: "",
     date: "",
     isRecurring: false,
+    weekly: false,
+    monthly: false,
+    yearly: false,
+    day: {},
   });
 
   const onChange = (e) => {
     setEmail({ ...email, [e.target.name]: e.target.value });
   };
 
+  const handleRecurring = (e) => {
+    setRecurring(!recurring);
+  };
+
+  const handleWeekly = (e) => {
+    setWeekly(!weekly);
+  };
+
+  const handleMonthly = (e) => {
+    setMonthly(!monthly);
+  };
+
+  const handleYearly = (e) => {
+    setYearly(!yearly);
+  };
+
   const SendMail = async (e) => {
     e.preventDefault();
     email.date = date;
     email.user_id = user._id;
+    email.isRecurring = recurring;
+    email.weekly = weekly;
+    email.monthly = monthly;
+    email.yearly = yearly;
+    email.day = day;
     setEmail({ ...email });
-    console.log(email);
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -95,20 +131,78 @@ function CreateAgenda() {
             required
           />
         </div>
-        <DateTimePicker onChange={setDate} value={date} />
-        {/* <DatePickerComponent
-          placeholder="Enter Date"
-          value={dateValue}
-          id="date"
-          name="date"
-          format="dd-MMM-yy"
-          onChange={onChange}
-        ></DatePickerComponent>
-
         <div className="form-group">
-          <label htmlFor="time">Enter time in IST format</label>
-          <TimePicker value={time} id="time" name="time" onChange={setTime} />
-        </div> */}
+          <label htmlFor="date">Select date and time</label>
+          <br></br>
+          <DateTimePicker onChange={setDate} value={date} />
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="recurring"
+            id="flexCheckDefault"
+            onChange={handleRecurring}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Send Recurring Mails
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="weekly"
+            id="flexCheckDefault"
+            onChange={handleWeekly}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Weekly
+          </label>
+        </div>
+
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          onChange={onChangeSetDay}
+          name="day"
+        >
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Sarturday</option>
+          <option value="7">Sunday</option>
+        </select>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="monthly"
+            id="flexCheckDefault"
+            onChange={handleMonthly}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Monthly
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="yearly"
+            id="flexCheckDefault"
+            onChange={handleYearly}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Yearly
+          </label>
+        </div>
 
         <button type="submit" className="btn btn-primary mt-3" value="Register">
           Send Email
