@@ -39,23 +39,47 @@ agenda.define("SEND_MAIL", (job, done) => {
 });
 
 router.post("/", async (req, res) => {
-  let { user_id, subject, body, sent_to } = req.body;
+  let { user_id, name, subject, body, sent_to, date, time, isRecurring } =
+    req.body;
 
-  try {
-    (async function () {
-      await agenda.start();
-      await agenda.schedule("6 seconds", "SEND_MAIL", {
-        user_id,
-        subject,
-        body,
-        sent_to,
-      });
-      return res.status(200).json({ msg: "Success" });
-    })();
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
+  var dateUTC = new Date(date);
+  // const yearUTC = dateUTC.getFullYear();
+  // const monthUTC = dateUTC.getMonth();
+  // const dayUTC = dateUTC.getDate();
+  // var newDate = new Date(yearUTC, monthUTC, dayUTC + 1);
+  // console.log(dateUTC);
+  // console.log(newDate);
+
+  dateUTC = dateUTC.getTime();
+  var dateIST = new Date(dateUTC);
+  //date shifting for IST timezone (+5 hours and 30 minutes)
+  dateIST.setHours(dateIST.getHours() + 5);
+  dateIST.setMinutes(dateIST.getMinutes() + 30);
+
+  console.log(dateIST);
+  console.log(time);
+
+  // console.log(dateUTC.getDate());
+  // const dateIST = new Date(getUTCDate(dateUTC));
+  // console.log(dateIST);
+
+  // if (isRecurring === false) {
+  //   try {
+  //     (async function () {
+  //       await agenda.start();
+  //       await agenda.schedule(date, "SEND_MAIL", {
+  //         user_id,
+  //         subject,
+  //         body,
+  //         sent_to,
+  //       });
+  //       return res.status(200).json({ msg: "Success" });
+  //     })();
+  //   } catch (err) {
+  //     console.error(err.message);
+  //     res.status(500).send("Server Error");
+  //   }
+  // }
 });
 
 module.exports = router;
