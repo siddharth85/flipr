@@ -1,72 +1,52 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../context/auth/authContext";
+import axios from "axios";
+import Row from "./Row";
 
 function ViewContacts() {
-  const authContext = useContext(AuthContext);
+  const [email, setEmail] = useState([]);
 
-  const { user } = authContext;
-
-  console.log(user);
-
-  const [category, setCategory] = useState({
-    category: "",
-  });
-
-  const onChange = (e) => {
-    setCategory({ ...category, [e.target.name]: e.target.value });
+  const getDetails = async (e) => {
+    const res = await axios.get("http://localhost:5000/api/sent");
+    const arr = res.data;
+    email.push(arr);
+    // console.log(email);
   };
+
   return (
     <>
-      <div className="form-group">
-        <label htmlFor="name">Category</label>
-        <select
-          class="form-select"
-          aria-label="Default select example"
-          onChange={onChange}
+      <div className="contaniner">
+        <button
+          onClick={getDetails}
+          className="btn btn-success mt-3"
+          value="Read"
         >
-          <option value="select">--</option>
-          <option value="blue">Blue</option>
-          <option value="green">Green</option>
-          <option value="red">Red</option>
-          <option value="orange" defaultChecked="true">
-            Orange
-          </option>
-          <option value="yellow">Yellow</option>
-        </select>
-
-        <Link className="btn btn-primary btn-sm mt-3" to="#" role="button">
-          View Contacts
-        </Link>
+          Fetch Data
+        </button>
       </div>
-
+      <h4>Sent Mails</h4>
       <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Agenda Name</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Body</th>
+            <th scope="col">Sent To</th>
+            <th scope="col">Time</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {/* {email.sent.forEach((info) => (
+            <tr>
+              <th scope="row">1</th>
+              <td>info.data.name</td>
+              <td>info.data.subject</td>
+              <td>info.data.body</td>
+              <td>info.data.sent_to</td>
+              <td>info.time</td>
+            </tr>
+          ))} */}
         </tbody>
       </table>
     </>
