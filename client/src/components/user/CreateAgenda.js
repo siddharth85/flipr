@@ -2,19 +2,13 @@ import React, { useState, useContext } from "react";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import AuthContext from "../../context/auth/authContext";
 import axios from "axios";
-import TimePicker from "react-time-picker";
+import DateTimePicker from "react-datetime-picker";
 
 function CreateAgenda() {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
 
-  const dateValue = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    14
-  );
-
-  const [time, setTime] = useState("10:00");
+  const [date, setDate] = useState(new Date());
 
   const [email, setEmail] = useState({
     user_id: "",
@@ -23,7 +17,6 @@ function CreateAgenda() {
     subject: "",
     body: "",
     date: "",
-    time: "",
     isRecurring: false,
   });
 
@@ -33,7 +26,7 @@ function CreateAgenda() {
 
   const SendMail = async (e) => {
     e.preventDefault();
-    email.time = time;
+    email.date = date;
     email.user_id = user._id;
     setEmail({ ...email });
     console.log(email);
@@ -102,7 +95,8 @@ function CreateAgenda() {
             required
           />
         </div>
-        <DatePickerComponent
+        <DateTimePicker onChange={setDate} value={date} />
+        {/* <DatePickerComponent
           placeholder="Enter Date"
           value={dateValue}
           id="date"
@@ -114,7 +108,7 @@ function CreateAgenda() {
         <div className="form-group">
           <label htmlFor="time">Enter time in IST format</label>
           <TimePicker value={time} id="time" name="time" onChange={setTime} />
-        </div>
+        </div> */}
 
         <button type="submit" className="btn btn-primary mt-3" value="Register">
           Send Email
