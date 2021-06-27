@@ -59,7 +59,7 @@ agenda.define("SEND_MAIL", (job, done) => {
     });
 
     var mailOptions = {
-      to: "gautamsiddharth8576@gmail.com",
+      to: "shankhanilborthakur@gmail.com",
       // bcc: [mailList],
       from: "tatusharma321@gmail.com",
       subject: subject,
@@ -84,12 +84,25 @@ agenda.define("SEND_MAIL", (job, done) => {
 });
 
 router.post("/", async (req, res) => {
-  let { user_id, name, subject, body, sent_to, date, isRecurring } = req.body;
-
+  var {
+    user_id,
+    name,
+    subject,
+    body,
+    sent_to,
+    date,
+    isRecurring,
+    weekly,
+    monthly,
+    yearly,
+    day,
+  } = req.body;
+  date = new Date(date);
   if (isRecurring === false) {
     try {
       (async function () {
         await agenda.start();
+
         await agenda.schedule(date, "SEND_MAIL", {
           user_id,
           name,
@@ -102,6 +115,90 @@ router.post("/", async (req, res) => {
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
+    }
+  } else {
+    if (weekly === true) {
+      day = day.day;
+      const hour = date.getHours();
+      const min = date.getMinutes();
+      // const st = `${min} ${hour} * * ${day}`;
+      // console.log(typeof st);
+
+      try {
+        (async function () {
+          await agenda.start();
+          await agenda.every(`${min} ${hour} * * ${day}`, "SEND_MAIL", {
+            user_id,
+            name,
+            subject,
+            body,
+            sent_to,
+          });
+          return res.status(200).json({ msg: "Success" });
+        })();
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+      }
+    }
+
+    if (monthly === true) {
+      const date_of_month = date.getDate();
+      const hour = date.getHours();
+      const min = date.getMinutes();
+      // const st = `${min} ${hour} ${date_of_month} * *`;
+      // console.log(st);
+
+      try {
+        (async function () {
+          await agenda.start();
+          await agenda.every(
+            `${min} ${hour} ${date_of_month} * *`,
+            "SEND_MAIL",
+            {
+              user_id,
+              name,
+              subject,
+              body,
+              sent_to,
+            }
+          );
+          return res.status(200).json({ msg: "Success" });
+        })();
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+      }
+    }
+
+    if (yearly === true) {
+      const date_of_month = date.getDate();
+      const month = date.getMonth();
+      const hour = date.getHours();
+      const min = date.getMinutes();
+      // const st = `${min} ${hour} ${date_of_month} * *`;
+      // console.log(st);
+
+      try {
+        (async function () {
+          await agenda.start();
+          await agenda.every(
+            `${min} ${hour} ${date_of_month} ${month} *`,
+            "SEND_MAIL",
+            {
+              user_id,
+              name,
+              subject,
+              body,
+              sent_to,
+            }
+          );
+          return res.status(200).json({ msg: "Success" });
+        })();
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+      }
     }
   }
 });
