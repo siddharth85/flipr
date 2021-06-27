@@ -16,29 +16,7 @@ const agenda = new Agenda({
 });
 
 agenda.define("SEND_MAIL", (job, done) => {
-  const { user_id, name, subject, body, sent_to } = job.attrs.data;
-
-  User.findById(user_id, function (err, details) {
-    if (err) console.log(err);
-    else {
-      const check = details.job_id.includes(job.attrs._id);
-
-      if (check) {
-      } else {
-        details.job_id.push(job.attrs._id);
-        details.save();
-        Content.create(
-          new Content({
-            job_id: job.attrs._id,
-            name: name,
-            subject: subject,
-            body: body,
-            sent_to: sent_to,
-          })
-        );
-      }
-    }
-  });
+  const { user_id, name, subject, body, sent_to, isRecurring } = job.attrs.data;
 
   User.findById(user_id, function (err, details) {
     if (err) {
@@ -98,17 +76,43 @@ router.post("/", async (req, res) => {
     day,
   } = req.body;
   date = new Date(date);
+
+  console.log(req.body);
+
   if (isRecurring === false) {
     try {
       (async function () {
-        await agenda.start();
-
-        await agenda.schedule(date, "SEND_MAIL", {
+        const job = agenda.create("SEND_MAIL", {
           user_id,
           name,
           subject,
           body,
           sent_to,
+          isRecurring,
+        });
+        await agenda.start();
+        await job.schedule(date).save();
+
+        User.findById(user_id, function (err, details) {
+          if (err) console.log(err);
+          else {
+            const check = details.job_id.includes(job.attrs._id);
+
+            if (check) {
+            } else {
+              details.job_id.push(job.attrs._id);
+              details.save();
+              Content.create(
+                new Content({
+                  job_id: job.attrs._id,
+                  name: name,
+                  subject: subject,
+                  body: body,
+                  sent_to: sent_to,
+                })
+              );
+            }
+          }
         });
         return res.status(200).json({ msg: "Success" });
       })();
@@ -126,14 +130,47 @@ router.post("/", async (req, res) => {
 
       try {
         (async function () {
-          await agenda.start();
-          await agenda.every(`${min} ${hour} * * ${day}`, "SEND_MAIL", {
+          const job = agenda.create("SEND_MAIL", {
             user_id,
             name,
             subject,
             body,
             sent_to,
+            isRecurring,
           });
+          await agenda.start();
+          await job.repeatEvery(`${min} ${hour} * * ${day}`).save();
+
+          User.findById(user_id, function (err, details) {
+            if (err) console.log(err);
+            else {
+              const check = details.job_id.includes(job.attrs._id);
+
+              if (check) {
+              } else {
+                details.job_id.push(job.attrs._id);
+                details.save();
+                Content.create(
+                  new Content({
+                    job_id: job.attrs._id,
+                    name: name,
+                    subject: subject,
+                    body: body,
+                    sent_to: sent_to,
+                  })
+                );
+              }
+            }
+          });
+
+          // await agenda.every(`${min} ${hour} * * ${day}`, "SEND_MAIL", {
+          //   user_id,
+          //   name,
+          //   subject,
+          //   body,
+          //   sent_to,
+          //   isRecurring,
+          // });
           return res.status(200).json({ msg: "Success" });
         })();
       } catch (err) {
@@ -151,18 +188,51 @@ router.post("/", async (req, res) => {
 
       try {
         (async function () {
+          const job = agenda.create("SEND_MAIL", {
+            user_id,
+            name,
+            subject,
+            body,
+            sent_to,
+            isRecurring,
+          });
           await agenda.start();
-          await agenda.every(
-            `${min} ${hour} ${date_of_month} * *`,
-            "SEND_MAIL",
-            {
-              user_id,
-              name,
-              subject,
-              body,
-              sent_to,
+          await job.repeatEvery(`${min} ${hour} ${date_of_month} * *`).save();
+
+          User.findById(user_id, function (err, details) {
+            if (err) console.log(err);
+            else {
+              const check = details.job_id.includes(job.attrs._id);
+
+              if (check) {
+              } else {
+                details.job_id.push(job.attrs._id);
+                details.save();
+                Content.create(
+                  new Content({
+                    job_id: job.attrs._id,
+                    name: name,
+                    subject: subject,
+                    body: body,
+                    sent_to: sent_to,
+                  })
+                );
+              }
             }
-          );
+          });
+          // await agenda.start();
+          // await agenda.every(
+          //   `${min} ${hour} ${date_of_month} * *`,
+          //   "SEND_MAIL",
+          //   {
+          //     user_id,
+          //     name,
+          //     subject,
+          //     body,
+          //     sent_to,
+          //     isRecurring,
+          //   }
+          // );
           return res.status(200).json({ msg: "Success" });
         })();
       } catch (err) {
@@ -181,18 +251,53 @@ router.post("/", async (req, res) => {
 
       try {
         (async function () {
+          const job = agenda.create("SEND_MAIL", {
+            user_id,
+            name,
+            subject,
+            body,
+            sent_to,
+            isRecurring,
+          });
           await agenda.start();
-          await agenda.every(
-            `${min} ${hour} ${date_of_month} ${month} *`,
-            "SEND_MAIL",
-            {
-              user_id,
-              name,
-              subject,
-              body,
-              sent_to,
+          await job
+            .repeatEvery(`${min} ${hour} ${date_of_month} ${month} *`)
+            .save();
+
+          User.findById(user_id, function (err, details) {
+            if (err) console.log(err);
+            else {
+              const check = details.job_id.includes(job.attrs._id);
+
+              if (check) {
+              } else {
+                details.job_id.push(job.attrs._id);
+                details.save();
+                Content.create(
+                  new Content({
+                    job_id: job.attrs._id,
+                    name: name,
+                    subject: subject,
+                    body: body,
+                    sent_to: sent_to,
+                  })
+                );
+              }
             }
-          );
+          });
+
+          // await agenda.start();
+          // await agenda.every(
+          //   `${min} ${hour} ${date_of_month} ${month} *`,
+          //   "SEND_MAIL",
+          //   {
+          //     user_id,
+          //     name,
+          //     subject,
+          //     body,
+          //     sent_to,
+          //   }
+          // );
           return res.status(200).json({ msg: "Success" });
         })();
       } catch (err) {

@@ -90,12 +90,11 @@ function CreateAgenda() {
           Add New Email Agenda
         </h2>
         <div className="form-group">
-          <label htmlFor="agendaName">Agenda Name</label>
+          <label htmlFor="name">Agenda Name</label>
           <input
-            id="agendaName"
             class="form-control"
-            type="text"
-            name="agendaName"
+            id="name"
+            name="name"
             onChange={onChange}
             required
           />

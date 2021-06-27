@@ -20,6 +20,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/send_mail", require("./routes/agenda"));
 app.use("/read_file", require("./routes/readFile"));
 app.use("/user/contact", require("./routes/addContact"));
+app.use("/api/sent", require("./routes/sent"));
 
 app.post("/upload", (req, res) => {
   if (req.files == null) {
