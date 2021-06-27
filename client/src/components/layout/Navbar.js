@@ -51,6 +51,13 @@ const Navbar = ({ title, icon }) => {
           <Link style={{ marginLeft: "50px" }} className="navbar-brand" to="/">
             <i className={icon} /> {title}
           </Link>
+          <Link
+            style={{ marginLeft: "20px", fontSize: "18px" }}
+            className="navbar-brand"
+            to="/dashboard"
+          >
+            Dashboard
+          </Link>
 
           <button
             className="navbar-toggler"

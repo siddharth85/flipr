@@ -8,6 +8,7 @@ import Dashboard from "./components/user/Dashboard";
 import ImportContacts from "./components/user/ImportContacts";
 import ViewContacts from "./components/user/ViewContacts";
 import CreateAgenda from "./components/user/CreateAgenda";
+import Home from "./components/layout/Home";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ const App = () => {
           <Navbar />
           <div className="container">
             <Switch>
+              <Route exact path="/" component={Home} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
