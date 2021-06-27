@@ -65,11 +65,11 @@ function CreateAgenda() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="recipient">Recipient</label>
+          <label htmlFor="sent_to">Recipient</label>
           <input
             class="form-control"
-            id="recipient"
-            name="recipient"
+            id="sent_to"
+            name="sent_to"
             onChange={onChange}
             required
           />
