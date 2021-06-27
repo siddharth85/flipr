@@ -12,7 +12,7 @@ function Dashboard() {
         <hr className="my-4" />
         <p>Upload your contacts and schedule on the go.</p>
 
-        <Link className="btn btn-primary btn-md" to="/dashboard" role="button">
+        <Link className="btn btn-primary btn-md" to="/import" role="button">
           Import Contacts
         </Link>
         <Link
@@ -26,7 +26,7 @@ function Dashboard() {
         <Link
           className="btn btn-success btn-md"
           style={{ marginLeft: "10px" }}
-          to="/dashboard"
+          to="/newAgenda"
           role="button"
         >
           New Campaign
