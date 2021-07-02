@@ -58,6 +58,7 @@ const Navbar = ({ title, icon }) => {
           >
             Dashboard
           </Link>
+          <div class="navbar-brand" id="google_translate_element"></div>
 
           <button
             className="navbar-toggler"
