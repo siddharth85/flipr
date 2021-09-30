@@ -8,10 +8,9 @@ const fileUpload = require("express-fileupload");
 app.use(cors());
 app.use(fileUpload());
 
-// Connect Database
+
 connectDB();
 
-// Init Middleware
 app.use(express.json({ extended: false }));
 
 // Define Routes
