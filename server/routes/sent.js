@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     function doA() {
       return new Promise((resolve) => {
         var arr = {};
-        User.findById("60d88fbfdce43922acbb72ef", function (err, details) {
+        User.findById("", function (err, details) {
           if (err) console.log(err);
           else {
             const job_id = details.job_id;
@@ -25,8 +25,6 @@ router.get("/", async (req, res) => {
                   var info = JSON.stringify(x);
                   info = info.replace("_id", "id");
                   info = JSON.parse(info);
-                  //   console.log(x.data);
-                  //   res.json(obj.data);
                   if (info.data.isRecurring === true) {
                     const obj = { data: info.data, time: info.nextRunAt };
                     recurringmails.push(obj);
