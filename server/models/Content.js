@@ -1,3 +1,4 @@
+// This is content.js file
 const mongoose = require("mongoose");
 
 const ContentSchema = new mongoose.Schema({
