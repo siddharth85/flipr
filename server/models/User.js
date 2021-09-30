@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+// mongoDb schema contains name,email,password,date,category,job_id
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
